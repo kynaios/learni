@@ -1,0 +1,13 @@
+version: "3.8"
+
+services:
+  postgres:
+    container_name: learni_db
+    image: postgres:15.4-alpine3.18
+    restart: unless-stopped
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_DB: learni
+      POSTGRES_USER: ${LEARNI_DATABSE_USER}
+      POSTGRES_PASSWORD: ${LEARNI_DATABSE_PASSWORD}
