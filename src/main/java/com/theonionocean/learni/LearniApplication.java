@@ -6,20 +6,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 @SpringBootApplication
-public class LearniApplication implements CommandLineRunner {
+public class LearniApplication {
 
-	private final JdbcTemplate jdbcTemplate;
+    public static void main(String[] args) {
+        SpringApplication.run(LearniApplication.class, args);
+    }
 
-	public LearniApplication(JdbcTemplate jdbcTemplate) {
-		this.jdbcTemplate = jdbcTemplate;
-	}
-
-	public static void main(String[] args) {
-		SpringApplication.run(LearniApplication.class, args);
-	}
-
-	@Override
-	public void run(String... args) throws Exception {
-		jdbcTemplate.queryForObject("SELECT 1", Integer.class);
-	}
 }
