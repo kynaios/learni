@@ -7,6 +7,8 @@ import com.deepl.api.Translator;
 import com.theonionocean.learni.dto.TranslationDto;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 
 @CrossOrigin(origins = "http://localhost:5173", maxAge = 3600)
 @RestController
@@ -25,5 +27,11 @@ public class TranslatorController {
         TextResult result = translator.translateText(word, null, targetLang);
 
         return new TranslationDto(word, result.getText());
+    }
+
+    @GetMapping("/targetLanguages")
+    private List<Language> getTargetLanguages() throws DeepLException, InterruptedException {
+
+        return translator.getTargetLanguages();
     }
 }
