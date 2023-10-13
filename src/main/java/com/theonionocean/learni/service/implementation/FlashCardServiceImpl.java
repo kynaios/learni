@@ -5,18 +5,20 @@ import com.theonionocean.learni.entity.FlashCard;
 import com.theonionocean.learni.repository.FlashCardRepository;
 import com.theonionocean.learni.service.FlashCardService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.UUID;
 
 @Component
+@Qualifier("FlashCardServiceImpl")
 public class FlashCardServiceImpl implements FlashCardService {
 
     FlashCardRepository repository;
 
     @Autowired
-    public FlashCardServiceImpl(FlashCardRepository repository) {
+    public FlashCardServiceImpl(@Qualifier("FlashCardRepositoryImpl") FlashCardRepository repository) {
         this.repository = repository;
     }
 
