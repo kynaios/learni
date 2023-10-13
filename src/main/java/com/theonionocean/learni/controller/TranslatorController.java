@@ -7,6 +7,8 @@ import com.deepl.api.Translator;
 import com.theonionocean.learni.dto.TranslationDto;
 import org.springframework.web.bind.annotation.*;
 
+
+@CrossOrigin(origins = "http://localhost:5173", maxAge = 3600)
 @RestController
 @RequestMapping("/api/v1")
 public class TranslatorController {
