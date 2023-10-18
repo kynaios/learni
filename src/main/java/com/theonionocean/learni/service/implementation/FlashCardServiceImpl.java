@@ -26,7 +26,7 @@ public class FlashCardServiceImpl implements CrudService<FlashCardDto> {
     public List<FlashCardDto> findAll() {
         return repository.findAll()
                 .stream()
-                .map(flashCard -> new FlashCardDto(flashCard.getId(), flashCard.getWord(), flashCard.getTranslation()))
+                .map(flashCard -> new FlashCardDto(flashCard.getId(), flashCard.getWord(), flashCard.getTranslation(), flashCard.getDeckId()))
                 .toList();
     }
 

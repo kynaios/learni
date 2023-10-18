@@ -32,7 +32,7 @@ public class FlashCardRepositoryImpl implements CrudRepository<FlashCard> {
 
     @Override
     public void save(FlashCard flashCard) {
-        jdbcTemplate.update("INSERT INTO flash_cards (word, translation) VALUES (?, ?)", flashCard.getWord(), flashCard.getTranslation());
+        jdbcTemplate.update("INSERT INTO flash_cards (word, translation, deck_id) VALUES (?, ?, ?)", flashCard.getWord(), flashCard.getTranslation(), flashCard.getDeckId());
     }
 
     @Override

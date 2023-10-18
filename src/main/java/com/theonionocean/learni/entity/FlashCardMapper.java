@@ -10,6 +10,6 @@ public class FlashCardMapper implements RowMapper<FlashCard> {
 
     @Override
     public FlashCard mapRow(ResultSet rs, int rowNum) throws SQLException {
-        return new FlashCard(rs.getObject("id", UUID.class), rs.getString("word"), rs.getString("translation"));
+        return new FlashCard(rs.getObject("id", UUID.class), rs.getString("word"), rs.getString("translation"), rs.getObject("deck_id", UUID.class));
     }
 }
