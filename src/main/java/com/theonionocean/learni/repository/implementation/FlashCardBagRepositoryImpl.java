@@ -2,7 +2,7 @@ package com.theonionocean.learni.repository.implementation;
 
 import com.theonionocean.learni.entity.FlashCard;
 import com.theonionocean.learni.entity.FlashCardMapper;
-import com.theonionocean.learni.repository.FlashCardRepository;
+import com.theonionocean.learni.repository.CrudRepository;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
@@ -12,7 +12,7 @@ import java.util.UUID;
 
 @Component
 @Qualifier("FlashCardBagRepositoryImpl")
-public class FlashCardBagRepositoryImpl implements FlashCardRepository {
+public class FlashCardBagRepositoryImpl implements CrudRepository<FlashCard> {
 
     private final JdbcTemplate jdbcTemplate;
 

@@ -2,8 +2,8 @@ package com.theonionocean.learni.service.implementation;
 
 import com.theonionocean.learni.dto.FlashCardDto;
 import com.theonionocean.learni.entity.FlashCard;
-import com.theonionocean.learni.repository.FlashCardRepository;
-import com.theonionocean.learni.service.FlashCardService;
+import com.theonionocean.learni.repository.CrudRepository;
+import com.theonionocean.learni.service.CrudService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -13,23 +13,28 @@ import java.util.UUID;
 
 @Component
 @Qualifier("FlashCardBagServiceImpl")
-public class FlashCardBagServiceImpl implements FlashCardService {
+public class FlashCardBagServiceImpl implements CrudService<FlashCardDto> {
 
-    FlashCardRepository repository;
+    CrudRepository<FlashCard> repository;
 
     @Autowired
-    public FlashCardBagServiceImpl(@Qualifier("FlashCardBagRepositoryImpl") FlashCardRepository repository) {
+    public FlashCardBagServiceImpl(@Qualifier("FlashCardBagRepositoryImpl") CrudRepository<FlashCard> repository) {
         this.repository = repository;
     }
 
     @Override
-    public List<FlashCard> findAll() {
-        return repository.findAll();
+    public List<FlashCardDto> findAll() {
+        return repository.findAll()
+                .stream()
+                .map(flashCard -> new FlashCardDto(flashCard.getId(), flashCard.getWord(), flashCard.getTranslation()))
+                .toList();
     }
 
     @Override
-    public FlashCard find(UUID id) {
-        return repository.find(id);
+    public FlashCardDto find(UUID id) {
+        FlashCard flashCard = repository.find(id);
+
+        return new FlashCardDto(flashCard.getId(), flashCard.getWord(), flashCard.getTranslation());
     }
 
     @Override

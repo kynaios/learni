@@ -6,14 +6,14 @@ import com.theonionocean.learni.entity.FlashCard;
 import java.util.List;
 import java.util.UUID;
 
-public interface FlashCardService {
-    List<FlashCard> findAll();
+public interface CrudService<T> {
+    List<T> findAll();
 
-    FlashCard find(UUID id);
+    T find(UUID id);
 
-    void save(FlashCardDto flashCardDto);
+    void save(T dto);
 
-    void update(FlashCardDto flashCardDto);
+    void update(T dto);
 
     void delete(UUID id);
 }

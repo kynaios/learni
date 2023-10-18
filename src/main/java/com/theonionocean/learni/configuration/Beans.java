@@ -1,7 +1,6 @@
 package com.theonionocean.learni.configuration;
 
 import com.deepl.api.Translator;
-import com.theonionocean.learni.repository.FlashCardRepository;
 import com.theonionocean.learni.repository.implementation.FlashCardBagRepositoryImpl;
 import com.theonionocean.learni.repository.implementation.FlashCardRepositoryImpl;
 import org.springframework.context.annotation.Bean;

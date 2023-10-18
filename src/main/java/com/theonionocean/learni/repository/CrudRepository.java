@@ -5,14 +5,14 @@ import com.theonionocean.learni.entity.FlashCard;
 import java.util.List;
 import java.util.UUID;
 
-public interface FlashCardRepository {
-    List<FlashCard> findAll();
+public interface CrudRepository<T> {
+    List<T> findAll();
 
-    FlashCard find(UUID id);
+    T find(UUID id);
 
-    void save(FlashCard flashCard);
+    void save(T entity);
 
-    void update(FlashCard flashCard);
+    void update(T entity);
 
     void delete(UUID id);
 }

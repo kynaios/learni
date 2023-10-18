@@ -14,6 +14,12 @@ public class FlashCardDto {
         return new FlashCard(id, word, translation);
     }
 
+    public FlashCardDto(UUID id, String word, String translation) {
+        this.id = id;
+        this.word = word;
+        this.translation = translation;
+    }
+
     public UUID getId() {
         return id;
     }
