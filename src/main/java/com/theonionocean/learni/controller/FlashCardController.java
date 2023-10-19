@@ -16,10 +16,12 @@ public class FlashCardController {
 
     CrudService<FlashCardDto> flashCardService;
     FlashCardDeckRelationService flashCardDeckRelation;
+    CrudService<FlashCardDto> flashCardBagService;
 
-    public FlashCardController(@Qualifier("FlashCardServiceImpl") CrudService<FlashCardDto> flashCardService, FlashCardDeckRelationService flashCardDeckRelation) {
+    public FlashCardController(@Qualifier("FlashCardServiceImpl") CrudService<FlashCardDto> flashCardService, FlashCardDeckRelationService flashCardDeckRelation, @Qualifier("FlashCardBagServiceImpl") CrudService<FlashCardDto> flashCardBagService) {
         this.flashCardService = flashCardService;
         this.flashCardDeckRelation = flashCardDeckRelation;
+        this.flashCardBagService = flashCardBagService;
     }
 
     @GetMapping("/all")
@@ -44,6 +46,7 @@ public class FlashCardController {
     @PostMapping("/create")
     public void save(@RequestBody FlashCardDto flashCardDto) {
         flashCardService.save(flashCardDto);
+        flashCardBagService.delete(flashCardDto.getId());
     }
 
     @PutMapping("/update")
