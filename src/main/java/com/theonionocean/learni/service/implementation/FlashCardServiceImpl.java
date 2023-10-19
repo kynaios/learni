@@ -3,7 +3,9 @@ package com.theonionocean.learni.service.implementation;
 import com.theonionocean.learni.dto.FlashCardDto;
 import com.theonionocean.learni.entity.FlashCard;
 import com.theonionocean.learni.repository.CrudRepository;
+import com.theonionocean.learni.repository.FlashCardDeckRelationRepository;
 import com.theonionocean.learni.service.CrudService;
+import com.theonionocean.learni.service.FlashCardDeckRelationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -13,20 +15,22 @@ import java.util.UUID;
 
 @Component
 @Qualifier("FlashCardServiceImpl")
-public class FlashCardServiceImpl implements CrudService<FlashCardDto> {
+public class FlashCardServiceImpl implements CrudService<FlashCardDto>, FlashCardDeckRelationService {
 
     CrudRepository<FlashCard> repository;
+    FlashCardDeckRelationRepository flashCardDeckRelationRepository;
 
     @Autowired
-    public FlashCardServiceImpl(@Qualifier("FlashCardRepositoryImpl") CrudRepository<FlashCard> repository) {
+    public FlashCardServiceImpl(@Qualifier("FlashCardRepositoryImpl") CrudRepository<FlashCard> repository, FlashCardDeckRelationRepository flashCardDeckRelationRepository) {
         this.repository = repository;
+        this.flashCardDeckRelationRepository = flashCardDeckRelationRepository;
     }
 
     @Override
     public List<FlashCardDto> findAll() {
         return repository.findAll()
                 .stream()
-                .map(flashCard -> new FlashCardDto(flashCard.getId(), flashCard.getWord(), flashCard.getTranslation(), flashCard.getDeckId()))
+                .map(flashCard -> new FlashCardDto(flashCard.getId(), flashCard.getWord(), flashCard.getTranslation()))
                 .toList();
     }
 
@@ -53,5 +57,13 @@ public class FlashCardServiceImpl implements CrudService<FlashCardDto> {
     @Override
     public void delete(UUID id) {
         repository.delete(id);
+    }
+
+    @Override
+    public List<FlashCardDto> findAllDeckFlashcards(UUID id) {
+        return flashCardDeckRelationRepository.findAllDeckFlashcards(id)
+                .stream()
+                .map(flashCard -> new FlashCardDto(flashCard.getId(), flashCard.getWord(), flashCard.getTranslation()))
+                .toList();
     }
 }

@@ -1,8 +1,8 @@
 package com.theonionocean.learni.controller;
 
 import com.theonionocean.learni.dto.FlashCardDto;
-import com.theonionocean.learni.entity.FlashCard;
 import com.theonionocean.learni.service.CrudService;
+import com.theonionocean.learni.service.FlashCardDeckRelationService;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,9 +15,11 @@ import java.util.UUID;
 public class FlashCardController {
 
     CrudService<FlashCardDto> flashCardService;
+    FlashCardDeckRelationService flashCardDeckRelation;
 
-    public FlashCardController(@Qualifier("FlashCardServiceImpl") CrudService<FlashCardDto> flashCardService) {
+    public FlashCardController(@Qualifier("FlashCardServiceImpl") CrudService<FlashCardDto> flashCardService, FlashCardDeckRelationService flashCardDeckRelation) {
         this.flashCardService = flashCardService;
+        this.flashCardDeckRelation = flashCardDeckRelation;
     }
 
     @GetMapping("/all")
@@ -30,6 +32,13 @@ public class FlashCardController {
         UUID id = UUID.fromString(requestId);
 
         return flashCardService.find(id);
+    }
+
+    @GetMapping("/get/deck/{deckId}")
+    public List<FlashCardDto> findAllDeckFlashcards(@PathVariable(name = "deckId") String deckId) {
+        UUID id = UUID.fromString(deckId);
+
+        return flashCardDeckRelation.findAllDeckFlashcards(id);
     }
 
     @PostMapping("/create")

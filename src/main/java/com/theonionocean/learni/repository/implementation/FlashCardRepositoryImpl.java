@@ -1,8 +1,10 @@
 package com.theonionocean.learni.repository.implementation;
 
+import com.theonionocean.learni.dto.FlashCardDto;
 import com.theonionocean.learni.entity.FlashCard;
 import com.theonionocean.learni.entity.FlashCardMapper;
 import com.theonionocean.learni.repository.CrudRepository;
+import com.theonionocean.learni.repository.FlashCardDeckRelationRepository;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
@@ -12,7 +14,7 @@ import java.util.UUID;
 
 @Component
 @Qualifier("FlashCardRepositoryImpl")
-public class FlashCardRepositoryImpl implements CrudRepository<FlashCard> {
+public class FlashCardRepositoryImpl implements CrudRepository<FlashCard>, FlashCardDeckRelationRepository {
 
     private final JdbcTemplate jdbcTemplate;
 
@@ -43,5 +45,10 @@ public class FlashCardRepositoryImpl implements CrudRepository<FlashCard> {
     @Override
     public void delete(UUID id) {
         jdbcTemplate.update("DELETE FROM flash_cards WHERE id=?", id);
+    }
+
+    @Override
+    public List<FlashCard> findAllDeckFlashcards(UUID id) {
+        return jdbcTemplate.query("select fc.id, fc.word, fc.\"translation\" from flash_cards fc inner join decks d on fc.deck_id = d.id where d.id = ?", new FlashCardMapper(), id);
     }
 }
